@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, Download } from 'lucide-react'
-import { toPng } from 'html-to-image'
 import { slides } from './slides.config'
 import CardOne from './cards/CardOne'
 import CardTwo from './cards/CardTwo'
@@ -51,6 +50,7 @@ export default function Carousel() {
     if (!cardRef.current || downloading) return
     setDownloading(true)
     try {
+      const { toPng } = await import('html-to-image')
       const dataUrl = await toPng(cardRef.current, {
         pixelRatio: 1080 / CARD_SIZE,
         cacheBust: true,
@@ -59,6 +59,8 @@ export default function Carousel() {
       a.href = dataUrl
       a.download = `slide-${current + 1}.png`
       a.click()
+    } catch (err) {
+      console.error('Download failed:', err)
     } finally {
       setDownloading(false)
     }
