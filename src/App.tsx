@@ -9,7 +9,7 @@ export default function App() {
   return (
     <div
       style={{
-        backgroundImage: 'url(/bg.jpeg)',
+        backgroundImage: `url(${import.meta.env.BASE_URL}bg.jpeg)`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
